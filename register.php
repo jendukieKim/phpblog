@@ -1,37 +1,30 @@
 <?php
 session_start();
-  require '../config/config.php';
+  require 'config/config.php';
 
   if(!empty($_POST)){
+    $username = $_POST['name'];
     $email = $_POST['email'];
     $password = $_POST['password'];
-
     $stmt = $pdo->prepare('select * from users where email=:email');
     $stmt->bindValue(':email',$email);
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     if($result){
-      if($result['password'] == $password){
-        $_SESSION['userId'] = $result['userid'];
-        $_SESSION['username'] = $result['name'];
-        $_SESSION['loggin'] = time();
-        $_SESSION['role'] = $result['role'];
-        if($_SESSION['role'] == 1){
-          echo "<script>alert('Login Successful');window.location.href='index.php'</script>";
-        }else{
-          echo "<script>alert('Login Successful');window.location.href='../index.php'</script>";
-        }
-        
-
-      }else{
-        echo "<script>alert('Incorrect crendital..');window.location.href='login.php'</script>";
-
-      }
+        echo "<script>alert('Email is already taken..')</script>";
     }else{
-      echo "<script>alert('Login Unsuccess');window.location.href='login.php'</script>";
-
+        $stmt1 = $pdo->prepare("INSERT INTO users(name,email,password) VALUES(:name,:email,:password)");
+        $result1 = $stmt1->execute(
+            array(
+                ':name'=>$username,
+                ':email'=>$email,
+                ':password'=>$password
+            )
+        );
+        if($result1){
+            echo "<script>alert('User added successfully..You can now login');window.location.href='login.php';</script>";
+        }
     }
-
 
   }
 
@@ -47,11 +40,11 @@ session_start();
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
   <!-- icheck bootstrap -->
-  <link rel="stylesheet" href="../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="../dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="dist/css/adminlte.min.css">
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
@@ -61,9 +54,17 @@ session_start();
   <!-- /.login-logo -->
   <div class="card">
     <div class="card-body login-card-body">
-      <p class="login-box-msg">Sign in to start your session</p>
+      <p class="login-box-msg">Register new account</p>
 
-      <form action="#" method="post">
+      <form action="register.php" method="post">
+      <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="Name" name="name">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-user"></span>
+            </div>
+          </div>
+        </div>
         <div class="input-group mb-3">
           <input type="email" class="form-control" placeholder="Email" name="email">
           <div class="input-group-append">
@@ -82,8 +83,9 @@ session_start();
         </div>
         <div class="row">
           
-          <div class="col-4">
-            <button type="submit" class="btn btn-primary btn-block">Login</button>
+          <div class="container">
+            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+            <a href="login.php" class="btn btn-default btn-block">Go Back</a>
           </div>
           <!-- /.col -->
         </div>
@@ -97,10 +99,10 @@ session_start();
 <!-- /.login-box -->
 
 <!-- jQuery -->
-<script src="../plugins/jquery/jquery.min.js"></script>
+<script src="plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
-<script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
-<script src="../dist/js/adminlte.min.js"></script>
+<script src="dist/js/adminlte.min.js"></script>
 </body>
 </html>

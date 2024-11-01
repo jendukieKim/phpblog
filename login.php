@@ -1,6 +1,6 @@
 <?php
 session_start();
-  require '../config/config.php';
+  require 'config/config.php';
 
   if(!empty($_POST)){
     $email = $_POST['email'];
@@ -16,12 +16,11 @@ session_start();
         $_SESSION['username'] = $result['name'];
         $_SESSION['loggin'] = time();
         $_SESSION['role'] = $result['role'];
-        if($_SESSION['role'] == 1){
+        if($_SESSION['role'] == 0){
           echo "<script>alert('Login Successful');window.location.href='index.php'</script>";
         }else{
-          echo "<script>alert('Login Successful');window.location.href='../index.php'</script>";
+          echo "<script>alert('Login Successful');window.location.href='admin/index.php'</script>";
         }
-        
 
       }else{
         echo "<script>alert('Incorrect crendital..');window.location.href='login.php'</script>";
@@ -47,11 +46,11 @@ session_start();
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
   <!-- icheck bootstrap -->
-  <link rel="stylesheet" href="../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="../dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="dist/css/adminlte.min.css">
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
@@ -82,8 +81,9 @@ session_start();
         </div>
         <div class="row">
           
-          <div class="col-4">
+          <div class="container">
             <button type="submit" class="btn btn-primary btn-block">Login</button>
+            <a href="register.php" class="btn btn-default btn-block">Register</a>
           </div>
           <!-- /.col -->
         </div>
@@ -97,10 +97,10 @@ session_start();
 <!-- /.login-box -->
 
 <!-- jQuery -->
-<script src="../plugins/jquery/jquery.min.js"></script>
+<script src="plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
-<script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
-<script src="../dist/js/adminlte.min.js"></script>
+<script src="dist/js/adminlte.min.js"></script>
 </body>
 </html>

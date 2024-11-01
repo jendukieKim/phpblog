@@ -23,8 +23,12 @@
       </li>
     </ul>
       
-  
-          <form action="index.php" method="post" class="form-inline ml-3">
+          <?php
+            $link = $_SERVER['PHP_SELF'];
+            $link_array = explode('/',$link);
+            $page = end($link_array);
+          ?>
+          <form action="<?php echo $page === 'index.php' ? 'index.php':'user_list.php'; ?>" method="post" class="form-inline ml-3">
             <div class="input-group input-group-sm">
               <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search" name="search">
               <div class="input-group-append">
@@ -74,6 +78,15 @@
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Blogs
+                <!-- <span class="right badge badge-danger">New</span> -->
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="user_list.php" class="nav-link">
+              <i class="nav-icon fas fa-user"></i>
+              <p>
+                Users
                 <!-- <span class="right badge badge-danger">New</span> -->
               </p>
             </a>

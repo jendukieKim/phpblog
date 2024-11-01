@@ -5,7 +5,10 @@ require '../config/config.php';
 if(empty($_SESSION['userid']) && empty($_SESSION['loggin'])){
   header('Location:login.php');
 }
-if(!empty($_POST)){
+if($_SESSION['role'] != 1){
+  header('Location:login.php');
+}
+if(!empty($_FILES)){
     $postid = $_POST['id'];
     $title = $_POST['title'];
     $content = $_POST['content'];
